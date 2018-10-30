@@ -156,6 +156,21 @@ Window {
 
     Button {
         anchors {
+            left: parent.left
+            top: parent.top
+            margins: 20
+        }
+
+        text: "R"
+
+        onClicked: {
+            generateRandomCubeData()
+            cubeData = cubeData
+        }
+    }
+
+    Button {
+        anchors {
             left: cube.left
             leftMargin: 20
             verticalCenter: cube.verticalCenter
