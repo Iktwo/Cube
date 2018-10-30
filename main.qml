@@ -43,6 +43,35 @@ Window {
         ]
     ]
 
+    onCubeDataChanged: {
+        printCubeData()
+    }
+
+    function printCubeData() {
+        for (var face = 0; face < 6; ++face) {
+            console.log("-- Face", face)
+            for (var i = 0; i < 3; ++i) {
+                console.log(cubeData[face][i])
+            }
+        }
+    }
+
+    function generateRandomCubeData() {
+        for (var face = 0; face < 6; ++face) {
+            for (var i = 0; i < 3; ++i) {
+                for (var j = 0; j < 3; ++j) {
+                    cubeData[face][i][j] = Math.floor(Math.random() * Math.floor(6))
+                }
+            }
+        }
+
+        printCubeData()
+    }
+
+    Component.onCompleted: {
+        generateRandomCubeData()
+        cubeData = cubeData
+    }
 
     Flow {
         anchors {
@@ -186,7 +215,7 @@ Window {
                 width: Math.min(parent.height, parent.width)
                 height: width
 
-                numbersVisible: false
+                numbersVisible: true
             }
         }
     }
