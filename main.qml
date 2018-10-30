@@ -56,11 +56,28 @@ Window {
         }
     }
 
+    function getDifferentColor(color) {
+        var randomColor = Math.floor(Math.random() * Math.floor(6))
+        if (color === undefined) {
+            return randomColor
+        } else {
+            while (color === randomColor) {
+                randomColor = Math.floor(Math.random() * Math.floor(6))
+            }
+
+            return randomColor
+        }
+    }
+
     function generateRandomCubeData() {
         for (var face = 0; face < 6; ++face) {
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
-                    cubeData[face][i][j] = Math.floor(Math.random() * Math.floor(6))
+                    if (face == 0) {
+                        cubeData[face][i][j] = getDifferentColor()
+                    } else {
+                        cubeData[face][i][j] = getDifferentColor(cubeData[face - 1][i][j])
+                    }
                 }
             }
         }
