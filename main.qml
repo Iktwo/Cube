@@ -56,17 +56,18 @@ Window {
         }
     }
 
-    function getDifferentColor(color) {
+    function getDifferentColor(colors) {
         var randomColor = Math.floor(Math.random() * Math.floor(6))
-        if (color === undefined) {
-            return randomColor
-        } else {
-            while (color === randomColor) {
-                randomColor = Math.floor(Math.random() * Math.floor(6))
-            }
 
+        if (colors === undefined) {
             return randomColor
         }
+
+        while (colors.indexOf(randomColor) !== -1) {
+            randomColor = Math.floor(Math.random() * Math.floor(6))
+        }
+
+        return randomColor
     }
 
     function generateRandomCubeData() {
@@ -76,7 +77,13 @@ Window {
                     if (face == 0) {
                         cubeData[face][i][j] = getDifferentColor()
                     } else {
-                        cubeData[face][i][j] = getDifferentColor(cubeData[face - 1][i][j])
+                        var colors = []
+
+                        for (var index = face - 1; index > 0; --index) {
+                            colors.push(cubeData[index][i][j])
+                        }
+
+                        cubeData[face][i][j] = getDifferentColor(colors)
                     }
                 }
             }
@@ -233,6 +240,17 @@ Window {
                 height: width
 
                 numbersVisible: true
+            }
+
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    right: parent.right
+                }
+
+                width: 8
+                color: "#343434"
             }
         }
     }
