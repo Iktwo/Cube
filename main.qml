@@ -59,9 +59,13 @@ Window {
         property int currentLeftIndex: 0
         property int currentRightIndex: 1
 
-        function getNewIndex(index, increasing) {
+        function getNewSideIndex(index, increasing) {
             var sides = 4
             var currentIndex = index
+
+            if (currentTopIndex == 5) {
+                increasing = !increasing
+            }
 
             if (increasing) {
                 if (currentIndex === sides - 1) {
@@ -107,8 +111,8 @@ Window {
         text: "<"
 
         onClicked: {
-            cube.currentLeftIndex = cube.getNewIndex(cube.currentLeftIndex, false)
-            cube.currentRightIndex = cube.getNewIndex(cube.currentRightIndex, false)
+            cube.currentLeftIndex = cube.getNewSideIndex(cube.currentLeftIndex, false)
+            cube.currentRightIndex = cube.getNewSideIndex(cube.currentRightIndex, false)
         }
     }
 
@@ -122,11 +126,33 @@ Window {
         text: ">"
 
         onClicked: {
-            cube.currentLeftIndex = cube.getNewIndex(cube.currentLeftIndex, true)
-            cube.currentRightIndex = cube.getNewIndex(cube.currentRightIndex, true)
+            cube.currentLeftIndex = cube.getNewSideIndex(cube.currentLeftIndex, true)
+            cube.currentRightIndex = cube.getNewSideIndex(cube.currentRightIndex, true)
         }
     }
 
+    Button {
+        anchors {
+            top: parent.top
+            topMargin: 20
+            horizontalCenter: cube.horizontalCenter
+        }
+
+        text: "^"
+
+        onClicked: {
+            cube.currentLeftIndex = cube.getNewSideIndex(cube.currentLeftIndex, false)
+            cube.currentRightIndex = cube.getNewSideIndex(cube.currentRightIndex, false)
+            cube.currentLeftIndex = cube.getNewSideIndex(cube.currentRightIndex, false)
+            cube.currentRightIndex = cube.getNewSideIndex(cube.currentLeftIndex, false)
+
+            if (cube.currentTopIndex == 4) {
+                cube.currentTopIndex = 5
+            } else {
+                cube.currentTopIndex = 4
+            }
+        }
+    }
 
     ListView {
         id: listView
